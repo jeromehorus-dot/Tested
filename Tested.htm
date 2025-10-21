@@ -1,1 +1,546 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/*Strategie Chute stabilisation gros volume prescedent Attente Achat-1min
+    cette nouvelle stratégie s'étend sur une minute  point elle est basée sur 
+    le sentiment du marché de peur  c'est-à-dire que lorsqu'il y a une grande montée ,
+     les gens commencent à avoir peur que les prix chutes  voir ce sont même plus des gens 
+     ce sont des robotoïdes , donc ils vendent et cette peur engendre la peur des autres qui vendent aussi et on 
+     assiste à des grandes chutes  ces grandes chute  ne s'arrête pas  ce ne sont pas des petits sommets des petits sommets c'est juste en fait des transactions courantes c'est grand sentiment de peur c'est autre chose et ça arrive très souvent dans le Bitcoin  car si on ne peut pas connaître le futur du Bitcoin exactement on peut connaître les sentiments des gens en voyant les courbes et les gens on les connaît donc plus ça descend et plus ça va descendre il y aura des gens qui ont ils voudront acheter quand ça descend mais le problème c'est que ce sentiment de peur va persister donc il y a une variable qui est la persistance de la peur et la personne la peur elle continue après que la chute ait lieu  plus ça va chuter et plus évidemment les gens vont commencer à acheter mais le sentiment de peur va continuer à faire descendre la courbe jusqu'à un certain point à ce certain. beaucoup de gens vont acheter.
+    il va donc y avoir un premier pic , ce premier clic servira
+     aussi à ceux qui ont peur  de clôturer  de sorte que ça va continuer de
+     baisser après ce premier pic  cependant beaucoup de gens qu'on commençait
+      à prendre confiance et à acheter donc ça va recommencer à augmenter  jusqu'à un certain point ou ceux qui étaient dans la première mouvance donc il y avait acheté vraiment très très bas comment ça vendre par car eux aussi ils ont peur et là donc nous assistons à un sommet et il va descendre et parfois il peut descendre très très bas , mené par un sentiment de peur sur 24 heures par exemple ou ça n'a pas arrêté d'augmenter et là tout le monde voit les prix chuter donc tout le monde le vend et ce qui fait encore plus chuter les prix , une fois ce deuxième pic atteint  ce qui avait pas vendu la première fois on eux aussi peur et vendre ce qui fait et entraîne une grande descente  et des grosses ventes et des gros gains à ceux qui ont acheté donc lorsque c'était tout en bas  et l'actif perd alors de sa valeur  et il peut encore descendre  cette nouvelle descente est à considérer comme être une descente exactement comme la première  il y a peut-être dans la remontée quelques instits qui vont clore et donc ça va faire que ça va descendre mais il faudra la traiter exactement comme la première et ainsi de suite on peut faire ça toute la journée  et attendre des opportunités donc  pour aller à contresens des 90 % de personnes qui sont des moutons  et la plupart des ces moutons ne sont même pas humains ce sont des robots de trading , car il y a 110 % de robot de trading sur le marché  et rien de plus stupide qu'un robot de trading  il va clôturer lorsque c'est la baisse  il va mettre des stops pour ne pas tout perdre  et comme c'est qu'une stupide machine on pourra facilement la biaiser , car nous sommes beaucoup plus intelligent que et évidemment il faut attendre  et voir leur stupidité à l'écran et lorsque ils ont tout perdu on peut ramasser  mais pas tout de suite parce que évidemment lorsque ça va remonter ils vont évidemment vouloir clôturer à moins de perte  et donc ça va en faire encore descendre le prix du marché et c'est là lorsque tout est en bas que là oui on peut acheter et  donc et qui a démarré des achats massifs parce que évidemment il y a d'autres robots stupides qui disent le prix est très très bas et donc tout remonte  mais le truc c'est que il faut vraiment attendre que ce soit en bas donc attendre  1 ou 2 petits sommets et pas des faux sommet  qui sont dans les descentes en fait juste les  personnes qui pensent que dans l'absolu il faut acheter parce que ça remonte et ces personnes là  c'est même pas des gens c'est des robots  qui disent le prix est très bas on va acheter  sauf que le sentiment de peur les écrase et souvent ils achètent et à perte parce que évidemment le truc continue de baisser de baisser de baisser donc il faut prendre en compte tout ça toutes ces stratégies avoir trading view voir les courbes ce programme en fait il va analyser ses chutes et lorsque elles seront stabilisées donc il va les signaler il va signaler  et attendre les descentes  je considère que c'est une grosse chute si c'est plus de 150 dollars sur une minute c'est une immense chute si c'est plus de 500 dollars sur une minute  donc là il faut donc mettre une petite musique qui va dire attention chut préparez-vous à acheter  et on attend donc que ce soit stabilisé en chute c'est-à-dire qu'il va falloir voir à la seconde près démonter les descentes les luttes et les bougies donc Bessières et haussière donc si c'est vraiment une bougie baissière ou il y a eu  beaucoup d'achat on va  se préparer à acheter  avec cette stratégie  plus un stop lose très bas , 
+    on prend les profits dans les quelques secondes 
+    qui suivent , ce qui veut dire  qu'il faut agir très vite 
+     car c'est la seconde près  
+    
+    
+    Maj : ce script est uniquement et preferablement en tendance HAUSSIERE
+    
+    
+    
+    */ </script>
+      <title> 1 minute strategy à la Hausse</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #feffeff // #f0f0f0;
+            padding: 20px;
+            font-size: 8px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .bitcoin-price {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .history-table th, .history-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .history-table th {
+            background-color: #f2f2f2;
+        }
+        .alerts {
+             font-size: 17px;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #eeffee;//#ffe6e6;
+            color: #cc0000;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+    <div class="container">
+        <h1>Strategy.exe</h1>
+        
+         <div class="bitcoin-price" id="bitcoinHaut"> prix le plus haut  </div>
+         
+        <div class="bitcoin-price" id="bitcoinPrice">
+            Chargement du prix Bitcoin...
+            
+            
+            
+        </div>
+        <i>
+         <div  class="bitcoin-price"  id="bitcoinBas"> prix le plus bas </div>
+        
+       
+        
+         <div class="bitcoin-price" id="prixInitial">
+            Chargement du prix Bitcoin...
+        </div>
+        <i>
+          <div class="bitcoin-price" id="gains">
+            Chargement du prix Bitcoin...
+        </div>
+        <br>
+          <div class="bitcoin-price" id="volumeDe">
+            Chargement du prix Bitcoin...
+        </div>
+        
+            <div id="conseils" class="alerts">
+            <!-- Les alertes seront ajoutées ici dynamiquement -->
+        </div>
+        
+        
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Prix Bitcoin (USD)</th>
+                </tr>
+            </thead>
+            <tbody id="bitcoinHistory">
+                <!-- L'historique des prix sera ajouté dynamiquement ici -->
+            </tbody>
+             <tbody id="variation">
+                <!-- L'historique des prix sera ajouté dynamiquement ici -->
+            </tbody>
+        </table>
+        <div id="alerts" class="alerts">
+            <!-- Les alertes seront ajoutées ici dynamiquement -->
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script>
+      
+      
+         // nouvelle strategie PEUR/VENTE du marché
+         
+        let Descente= false;
+       
+        let momentDAchater = false;
+        let fausseStabilisation = false;
+        let prixFourchette = 150;// lorsque ca chute de 150 
+        let marcheEchange; // si peu de gain ou perte soit c est en chute et ça lutte soitbc est normal et ça lutte pas, ça échange
+        let Commencer= true;
+        let facteurPeur=0;
+        let stabilisation =0;
+        
+        
+        
+        // JavaScript pour récupérer les données et gérer l'application de trading
+        let bitHistory = [];
+        let interval = 3000; // Interval de mise à jour en millisecondes (30 secondes)
+        let lastUpdateTime = 0;
+        let bitcoinPrice = "Chargement...";
+        let detecteurDeBalaine = 0; // lorsque le prix s envole
+        
+        var  prixLePlusBas=9999999990;
+         var prixLePlusHaut=0;
+         
+         
+         var Perte;
+         var gain;
+         
+         var prixAchat = 0;
+         var gainTotal=0;
+         var perteTotale =0;
+         var gainReel = 0;
+         var perteReel =0;
+         var compteur =0;
+         
+        const sonAchat = new Howl({ src: ['1000159915.mp3'] });
+        const sonVente = new Howl({ src: ['Notification.wav'] });
+        const sonStopLoose = new Howl({ src: ['stoploose.wav'] });
+        const sonTakeProfit = new Howl({ src: ['takeprofit.wav'] });
+
+        function updateBitcoinPrice() {
+           // fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
+            
+            fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDC')
+            
+                .then(response => response.json())
+                .then(data => {
+                    bitcoinPrice = data.price;
+                    document.getElementById('bitcoinPrice').textContent = `Prix Bitcoin: ${bitcoinPrice} USD`;
+                    const priceFloat = parseFloat(bitcoinPrice.replace(',', ''));
+                    updateHistory(priceFloat);
+                    if ( prixAchat ==0)
+                    {prixAchat = priceFloat;
+                    document.getElementById('prixInitial').textContent = `Prix Achat: ${prixAchat} USD`;
+                   
+                    }
+                    ++compteur;
+                    checkAlerts(priceFloat);
+                       if ( Commencer) Commencer = false;
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération du prix Bitcoin:', error);
+                    bitcoinPrice = "Erreur de chargement";
+                    document.getElementById('bitcoinPrice').textContent = bitcoinPrice;
+                });
+        }
+
+        function updateHistory(price) {
+            
+         
+            
+            showAlert('');
+            
+            // met le prix du bitcoin dans la variable
+            bitHistory.push(price);
+            
+            // recalcule tout
+            
+            gainReel = 0;
+            perteReel =0;
+            
+            var difference = 0;
+            if ( bitHistory.length >1)
+        {
+          difference = bitHistory[compteur]-bitHistory[compteur-1];
+       
+       
+       
+       
+       // mise à jours du prix le plus haut et bas
+       
+        if ( price < prixLePlusBas) prixLePlusBas = price;
+         if ( price > prixLePlusHaut) prixLePlusHaut = price ;
+         
+         document.getElementById('bitcoinBas').innerHTML = `<b> ${prixLePlusBas} </b>`;
+        document.getElementById('bitcoinHaut').innerHTML = `<b> ${prixLePlusHaut} </b>`;
+        
+                  
+                  
+         
+         
+            
+            //perte
+       if ( difference < 0) // autre façon dz faire
+            {  
+            detecteurDeBalaine+=difference;
+            if ( detecteurDeBalaine < -2)// ca ne descend ca monte en fleche, pas de pertes donc entre 30 sec8bdes
+            detecteurDeBalaine =0;
+            
+            
+            facteurPeur += difference;
+            perteTotale +=difference;// la dirrence est en négatif + -
+            
+            const historyTable = document.getElementById('bitcoinHistory');
+            const newRow = `<tr style="color:red;"><td>${bitHistory.length}</td><td>${price}</td><td>perte ${difference}</td></tr>`;
+            historyTable.innerHTML += newRow;
+            }
+            // le prix du bitcoin à augmenté
+            if ( difference >= 0) // autre façon dz faire
+            {
+                facteurPeur += difference;
+                if ( facteurPeur > 20)// j hesite avec 150
+                facteurPeur = 0; // car on oublie les montee qui ne sont pas interessantes pour acheter, car on prends le moins de risques possibles, on attends la fin d une descente
+                
+                // on attends la stabilisation
+                if (Descente)
+                stabilisation+=difference;
+                
+                detecteurDeBalaine+=difference;
+                
+                gainTotal+=difference;
+            
+            const historyTable = document.getElementById('bitcoinHistory');
+            const newRow = `<tr style="color:green;"><td>${bitHistory.length}</td><td>${price}</td><td>gain ${difference}</td></tr>`;
+            historyTable.innerHTML += newRow;
+            }
+       
+       
+       
+        }
+        
+        // information sur le volume : gros volumes = grosses variations entre les prix
+        // on peux predire des courbes si par exemple gros volume et perte et gain semblables,
+        // on peux predire si ca va monter( in balce)
+        // que des pertes = predire que ça va descendre
+        // que des gains = que ça monte, la tendance est haussiere, on peux même investir dessus en cours de route
+              var vb= `<b style="color:green">Gains total: ${gainTotal} USD</b><br>  <b style="color:red">perte total: ${perteTotale} USD</b> facteur de peur : ${facteurPeur}`;
+                  document.getElementById('volumeDe').innerHTML = vb;
+        
+                  
+           
+           
+           
+           // gains reels
+           
+           gainReel =  price - prixAchat  ;
+           
+           if (  gainReel < 0)
+           
+           
+           document.getElementById('gains').innerHTML = `<b style="color:red">Gains: ${gainReel} USD</b>`;
+                   
+                   if (  gainReel > 0)
+           
+           document.getElementById('gains').innerHTML = `<b style="color:green">Gains: ${gainReel} USD</b>`;
+                  
+                  
+                  
+                  
+                  
+                  
+                  // le gainTotal sera sujet a reinitialisation
+                  
+                  
+                  /*  rappell des variables
+                    let Descente= false;
+        let stabilisation = false;
+        let momentDAchater = false;
+        let fausseStabilisation = false;
+        let prixFourchette = 150;// lorsque ca chute de 150 
+        let marcheEchange; // si peu de gain ou perte soit c est en chute et ça lutte soitbc est normal et ça lutte pas, ça échange
+        let Commencer= true;
+        
+        */
+        
+                  if ( Commencer)
+                  {
+                      sonAchat.play();
+    document.getElementById('conseils').innerHTML = `Bienvenue commandeur...en attente de strategie`;
+      }
+      else
+      {
+          if ( detecteurDeBalaine > 300)
+          {   sonAchat.play();
+              // serieuse montee 
+              document.getElementById('conseils').innerHTML = `ATTENTION BALAINE MONTEE ACHETER.`;
+              
+              } 
+          else
+          if ( Descente)
+          {
+              // on va reinitialiser le facteur peur
+              document.getElementById('conseils').innerHTML = `en ATTENTE DE STABILISATION.`;
+              
+              if ( stabilisation >30)
+              {
+                  sonAchat.play();
+                    document.getElementById('conseils').innerHTML = `stabilisation en cours se préparer à acheter si il n est pas repartit en fleche vers le haut.il va repartir puis soit rechuter, soit faire des bonds vers le bas dans 70% des cas`;
+              
+                  }
+                  
+                  if ( stabilisation >50)
+              {
+                    document.getElementById('conseils').innerHTML = `regarder la courbe : pas d'achat si on est dans le sommet d une figure ( risque elevé)  ( figure ) et acheter`;
+              stabilisation =0;
+              Descente= false;
+              facteurPeur=0;
+              
+                  }
+                  
+                  
+                  
+                  
+              
+              }
+           else // fin descente
+           {   
+          // basé sur les observations du bitcoin a 1 minute
+          if ( facteurPeur >0)
+          {
+            document.getElementById('conseils').innerHTML = `le marché fait des echanges... `;
+            if ( facteurPeur >140)
+             document.getElementById('conseils').innerHTML = `le marché fait des echanges... mais le sentiment de peur s insralle `;
+          
+          }
+          if ( facteurPeur > 50 && facteurPeur < 150)
+          {
+              // on est dans la lutte
+            document.getElementById('conseils').innerHTML = `le marché fait des echanges...à la hausse ( acheter peut etres).. `;
+           
+              detecteurDeBalaine = 0;
+          
+          }
+            if (  facteurPeur   < -10   )
+          {
+              // on est dans la lutte
+            document.getElementById('conseils').innerHTML = `le sentiment de peur s installe BIEN , peut etres une chute -DING- prevention `;
+          // Descente = true;
+          detecteurDeBalaine = 0;
+          
+          }
+          
+          // on peux compter les pertes accumulees totalPertes
+          if ( facteurPeur <  -70 )
+          {
+              // on est dans la lutte
+            document.getElementById('conseils').innerHTML = ` CHUTE : le marché descend, s'attendre à une chute !!! Appliquer la strategie attendre `;
+           
+          detecteurDeBalaine = 0;
+          }
+          
+          // le mieux c est 200, apres ca chute et stabilise
+          // d apres mon dernier trade ça reminte avabt 170, on met 140 ou 135
+          if ( facteurPeur <  -135 )// 140
+          {
+              
+              // on est dans la lutte
+            document.getElementById('conseils').innerHTML = `PANIQUE le marché s effondre !!! panique`;
+           Descente = true;
+          // facteurPeur=0;
+          
+          }
+          
+          
+          
+          }// fin else
+          
+          
+          }
+     
+      
+          
+          // if gain > 200 sentiment de peur s installe... attendre
+                  
+                  
+                  
+                  
+                  // logique de prise de risques
+                  
+                  /*
+                  
+                    // Logique pour vérifier les alertes de trading
+            // Exemple simple basé sur votre logique d'alerte
+            if (gainReel > 50) {
+                sonTakeProfit.play();
+                showAlert('Seuil de gain atteint, vendre 40 %!');
+            } 
+            if (gainReel > 100) {
+                sonTakeProfit.play();
+                showAlert('Seuil de gain atteint, vendre 60 %!');
+            } 
+            if (gainReel > 100) {
+                sonTakeProfit.play();
+                showAlert('Seuil de gain atteint, vendre 100 %!');
+            } 
+                
+                    
+            else if (gainReel < -40) {
+                sonStopLoose.play();
+                showAlert('Déclanchement du Stop loss prochainement si encore perte! ');
+            }
+            else if (gainReel < -70) { // 70 c pas trop reel, ça peux encore remonter
+                sonStopLoose.play();
+                showAlert('Déclanchement du Stop loss! vendre 30%');
+            
+            // voir si on peux vendre et acheter à bas prix pour couvrir la perte
+            }
+            else if (gainReel < -100) {
+                sonStopLoose.play();
+                showAlert('Déclanchement du Stop loss!  vendre 60%');
+              // Acheter que si on a atteint une valeur cible
+              
+              
+            }
+            // le bitcoin ne peux que remonter, on éparge ce qui reste
+                  
+                  */
+          /*  const historyTable = document.getElementById('bitcoinHistory');
+            const newRow = `<tr style="color:red;"><td>${bitHistory.length}</td><td>${price}</td><td>perte ${difference}</td></tr>`;
+            historyTable.innerHTML += newRow;
+        
+        */
+        
+           
+         
+         ///// conseils d'achats
+         
+         // algo de decision
+         
+         /*
+         
+         document.getElementById('conseils').innerHTML = `<b>`;
+        
+        // prix au sommet
+        if ( price > prixLePlusHaut-100 ) 
+                  {
+                  document.getElementById('conseils').innerHTML += `le prix plafone au plus haut. `;
+          if ( gainTotal > Math.abs(perteTotale)) // petteTotale-100
+          document.getElementById('conseils').innerHTML += `le volume est gagnant, ça peux encore augmenter, vendre si ça augmente encore. voir courbe ( double sommet en perspective ?) attention cependant à ce que ca n amorce pas une serieuse montee ( courbes du bitcoin). le plus sage, ne rien faire si on voit que ça peux augmenter sur les courbes à 7j`;
+      
+          if ( gainTotal < Math.abs(perteTotale) ) // gaintTotal-100
+          document.getElementById('conseils').innerHTML += `le volume est perdant, tout risque de se casser la figure. Conseil, ne rien faire.`;
+      
+          
+          
+          
+            }
+            
+            else if ( price < prixLePlusBas + 100 ) //300 c est bien , 100 parait plus realiste
+             
+                  {
+                  document.getElementById('conseils').innerHTML += `le prix est au plus bas. `;
+                 
+                 if ( gainTotal > Math.abs(perteTotale))// perteTotale-300
+          document.getElementById('conseils').innerHTML += `le volume est gagnant, se préparer à acheter si ça remonte ou attendre que ça baisse,  `;
+      
+          if ( gainTotal < Math.abs(perteTotale )) // gain+100
+          document.getElementById('conseils').innerHTML += `le volume est perdant, attendre que ça baisse ( ça le peux), pour acheter ( voir prix vitcoin et courbes`;
+      
+          
+            }
+            
+            document.getElementById('conseils').innerHTML += `</b>`;
+      
+            */
+            
+            
+            
+            
+            
+            
+        }
+
+        function checkAlerts(currentPrice) {
+          
+        }
+
+        function showAlert(message) {
+            const alertsDiv = document.getElementById('alerts');
+            alertsDiv.innerHTML = `<p>${message}</p>`;
+        }
+
+        // Fonction pour appeler la mise à jour toutes les 60 secondes
+        function startUpdateLoop() {
+            updateBitcoinPrice(); // Appel initial
+            setInterval(updateBitcoinPrice, interval);
+        }
+
+        // Démarrer la mise à jour automatique au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            startUpdateLoop();
+        });
+    </script>
+</body>
+
+
+</html>
+
